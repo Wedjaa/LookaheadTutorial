@@ -1,0 +1,2 @@
+jspm install github:ajaxorg/ace-builds -o "{ directories: { lib: 'src-noconflict' }, main: 'ace', format: 'global', shim: { 'ace-builds': { exports: 'ace' }, 'ace-builds/theme-monokai': { deps: ['ace-builds'] }, 'ace-builds/mode-html': { deps: ['ace-builds']} } }" -f
+

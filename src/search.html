@@ -1,0 +1,66 @@
+<template>
+    <require from="./components/jsonedit"></require>
+    <section class="row">
+        <div class="col-md-4 col-md-offset-1">
+            <h2>Search Tester</h2>
+            <form role="form" submit.delegate="search()">
+                <div class="form-group">
+
+                    <div class="input-group">
+                        <input type="text" value.bind="selectedQuery.default_token" class="form-control" id="searchToken" placeholder="Lookahead search">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-default">Search</button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="querySelect">Pick a Query Style</label>
+                    <select class="form-control" id="querySelect" value.bind="selectedQuery">
+                        <option>Choose an query style</option>
+                        <option repeat.for="query of queries" model.bind="query">${query.description}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Search Query [<em>{{token}}</em> will be replaced by search token]:</label>
+                    <json-edit id="jsoneditor" code.two-way="selectedQuery.query"></json-edit>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <h2>Found <span if.bind="results.hits">${results.hits.total}</span> values <span if.bind="results.took">${results.took} ms</span></h2>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Score</th>
+                    <th>Title</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr repeat.for="hit of results.hits.hits">
+                    <td>${hit._score}</td>
+                    <td>${hit.fields['dcterms:title'][0]}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-2">
+            <h2>Notes on the query</h2>
+            <div innerHTML.bind="selectedQuery.notes"></div>
+            <h2>Book Properties</h2>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Analyzer</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr repeat.for="property of properties">
+                    <td>${property.name}</td>
+                    <td innerHTML="${property.description}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</template>

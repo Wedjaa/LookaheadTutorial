@@ -1,0 +1,46 @@
+<template>
+    <require from="./components/lookahead"></require>
+    <require from="./components/jsonedit"></require>
+    <section class="row">
+        <div class="col-md-4 col-md-offset-1">
+            <h2>TypeAhead Query Template</h2>
+            <json-edit style="height: 600px" id="jsoneditor" code.two-way="queryTpl"></json-edit>
+        </div>
+        <div class="col-md-3">
+            <h2>TypeAhead Tester</h2>
+            <look-ahead es.bind="esUrl" tpl.bind="queryTpl"></look-ahead>
+        </div>
+        <div class="col-md-3">
+            <h2>TypeAhead Challenge</h2>
+            Try and start typing <em>nice girls</em>, what happens? You will notice that
+            no results are returned. Why do you think that is? How could you fix it?
+            <button style="margin-top: 20px" click.delegate="toggleResponse()">Toggle Response</button>
+            <div if.bind="showResponse">
+                <h2>TypeAhead Challenge Response</h2>
+                You are looking to match single terms, which is good and sound until you start typing
+                entire phrases. In that case you may want to rewrite the filter to let in also phrases
+                composed by more ngrams.
+                <pre style="width: 80%; margin-right: auto; margin-left: auto; margin-top: 20px">
+                    <code>
+"filter": {
+    "or": [
+        {
+            "term": {
+                "title_edge": "{{token}}"
+            }
+        },
+        {
+            "query": {
+                "match_phrase": {
+                    "title_edge": "{{token}}"
+                }
+            }
+        }
+    ]
+}
+                    </code>
+                </pre>
+            </div>
+        </div>
+    </section>
+</template>

@@ -1,0 +1,23 @@
+<template>
+  <section class="row">
+    <div class="col-md-4 col-md-offset-2">
+      <div class="alert alert-warning alert-dismissible" style.bind="alertStyle" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <span innerHTML.bind="message">Alert Message Goes Here</span>
+      </div>
+      <h2>${heading}</h2>
+      <form role="form" submit.delegate="loadData()">
+        <div class="form-group">
+          <label for="server">Elasticsearch Server</label>
+          <input type="text" value.bind="server" class="form-control" id="server" placeholder="hostname">
+        </div>
+        <div class="form-group">
+          <label for="port">Elasticsearch Port</label>
+          <input type="text" value.bind="port" class="form-control" id="port" placeholder="port">
+        </div>
+        <button type="submit" class="btn btn-default">Load Sample Data</button>
+      </form>
+      <h3 style.bind="counterStyle">Loaded ${progressText} books</h3>
+    </div>
+  </section>
+</template>

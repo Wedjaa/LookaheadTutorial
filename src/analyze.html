@@ -1,0 +1,40 @@
+<template>
+    <section class="row">
+        <div class="col-md-4 col-md-offset-2">
+            <h2>Analyzers Tester</h2>
+            <form role="form" submit.delegate="analyze()">
+                <div class="form-group">
+                    <label for="testString">Text to Analyze</label>
+                    <input type="text" value.bind="testString" class="form-control" id="testString" placeholder="Test String">
+                </div>
+                <div class="form-group">
+                    <label for="analyzer">Analyzer</label>
+                    <select class="form-control" id="analyzer" value.bind="selectedAnalyzer">
+                        <option>Choose an analyzer</option>
+                        <option repeat.for="analyzer of analyzers" value.bind="analyzer.name">${analyzer.description}</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-default">Analyze</button>
+            </form>
+        </div>
+    </section>
+    <section class="row">
+        <div class="col-md-4 col-md-offset-2">
+            <h2>Analyzers Tokens</h2>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Token</th>
+                    <th>Position</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr repeat.for="token of tokens">
+                    <td>${token.token}</td>
+                    <td innerHTML.bind="$parent.highlight(token)"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</template>
